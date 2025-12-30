@@ -1,0 +1,105 @@
+# Gitignore made from ChatGPT.
+
+# =========================
+# OS / Editor junk
+# =========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# =========================
+# Python build / cache
+# =========================
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+pip-wheel-metadata/
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+venv/
+ENV/
+env/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Logs / temp files
+# =========================
+*.log
+*.tmp
+*.bak
+
+# =========================
+# Outputs (generated)
+# =========================
+outputs/
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+
+# If you DO want to keep some figures/reports in git,
+# remove the lines above and instead ignore only:
+# outputs/logs/
+# outputs/tmp/
+
+# =========================
+# Data (often large)
+# =========================
+data/raw/
+data/external/
+data/tmp/
+*.csv
+*.parquet
+*.h5
+*.hdf5
+*.mat
+
+# If you want to commit small example datasets, do this instead:
+# - remove the *.csv ignore
+# - keep data/raw ignored
+# - store tiny samples in data/processed/ or data/examples/
+
+# =========================
+# CAD / engineering file formats (often big)
+# =========================
+cad/fusion/
+*.f3d
+*.f3z
+# *.step
+*.stp
+*.iges
+*.igs
+# *.stl
+*.obj
+
+# If you want to track exports, remove the STEP/STL lines
+# and keep only cad/fusion ignored.
+
+# =========================
+# Secrets
+# =========================
+.env
+.env.*
+*.key
+*.pem
