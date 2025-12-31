@@ -35,5 +35,8 @@ With the emergence of high-speed rail projects on the US West Coast, this projec
 * The track will be treated simply as an input for disturbance, not as a separate dynamical system.
 * Railcar body assumed to be rigid. Structural flexibility of materials will be ignored.
 
+## Details
+See Project Scope Report under "docs" for a more detailed report, or [click here](docs/project_scope.pdf)
+
 ## License
 Licensed under the MIT License. See LICENSE for details.
