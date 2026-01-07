@@ -52,11 +52,11 @@ env/
 # Outputs (generated)
 # =========================
 outputs/
-*.png
-*.jpg
-*.jpeg
-*.svg
-*.pdf
+# *.png
+# *.jpg
+# *.jpeg
+# *.svg
+# *.pdf
 
 # If you DO want to keep some figures/reports in git,
 # remove the lines above and instead ignore only:
@@ -69,7 +69,7 @@ outputs/
 data/raw/
 data/external/
 data/tmp/
-*.csv
+# *.csv
 *.parquet
 *.h5
 *.hdf5
@@ -84,14 +84,14 @@ data/tmp/
 # CAD / engineering file formats (often big)
 # =========================
 cad/fusion/
-*.f3d
-*.f3z
-# *.step
-*.stp
-*.iges
-*.igs
-# *.stl
-*.obj
+# *.f3d
+# *.f3z
+# # *.step
+# *.stp
+# *.iges
+# *.igs
+# # *.stl
+# *.obj
 
 # If you want to track exports, remove the STEP/STL lines
 # and keep only cad/fusion ignored.
