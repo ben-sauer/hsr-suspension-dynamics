@@ -15,3 +15,4 @@ import matplotlib.pyplot as plt
 # print(M)
 
 # print("K min eig:", np.min(np.linalg.eigvalsh((K+K.T)/2)))
+print(B)

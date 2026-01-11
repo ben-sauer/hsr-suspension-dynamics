@@ -73,9 +73,6 @@ K = np.array([[k_sL1 + k_sR1 + k_sL2 + k_sR2, -l_L*(k_sL1 + k_sL2) + l_R*(k_sR1 
               [-(k_sL2 + k_sR2), l_L*k_sL2 - k_sR2*l_R, b_2*(k_sL2 + k_sR2), 0, 0, (k_sL2 + k_sR2 + k_pL2 + k_pR2), -l_L*(k_sL2 + k_pL2) + l_R*(k_sR2 + k_pR2)],
               [k_sL2*l_L - k_sR2*l_R, -l_L**2*k_sL2 - l_R**2*k_sR2, b_2*(l_L*k_sL2 - l_R*k_sR2), 0, 0, -l_L*(k_sL2 + k_pL2) + l_R*(k_sR2 + k_pR2), l_L**2*(k_sL2 + k_pL2) + l_R**2*(k_sR2 + k_pR2)]])
 
-# Create input u matrix
-u = np.array([0, 0, 0, z_gL1, z_gR1, z_gL2, z_gR2]) # Placeholder for inputs at wheel-rail contacts
-
 # Create input G matrices
 G_z_dot = np.array([[0,0,0,0],
               [0,0,0,0],
@@ -126,8 +123,8 @@ def assemble_B_matrix(M_inv=M_inv,G_z=G_z,G_z_dot=G_z_dot):
     Returns:
         B (np.ndarray): Input matrix
     """
-    G = np.hstack(G_z, G_z_dot)
-    Z = np.zeros_like(M_inv)
+    G = np.hstack((G_z, G_z_dot))
+    Z = np.zeros((7,8))
     B_bottom = M_inv @ G
     B = np.vstack((Z, B_bottom))
 

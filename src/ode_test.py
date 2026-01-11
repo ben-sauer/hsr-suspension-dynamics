@@ -26,7 +26,7 @@ t_span = (0, 5)
 t_eval = np.linspace(t_span[0], t_span[1], 30)
 
 # Initial Values
-f = np.array([99999,0,0,0,0,0,0])
+f = np.array([10,0,0,0,0,0,0])
 q1_0 = np.zeros(7)
 q2_0 = np.zeros(7)
 x0 = np.concatenate([q1_0,q2_0])
