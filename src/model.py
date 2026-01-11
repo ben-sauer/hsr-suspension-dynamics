@@ -14,7 +14,6 @@ Status: IN PROGRESS
 """
 
 import numpy as np
-from scipy.sparse import csr_matrix, bmat
 
 # Parameters
 m_c = 47800 # Carbody mass [kg]
@@ -25,6 +24,7 @@ I_cy = 1957888 # Carbody pitch moment of inertia [kg*m^2]
 I_b1, I_b2 = 2835, 2835 # Bogie roll moment of inertia [kg*m^2]
 
 b_1, b_2 = 17.375//2, 17.375//2 # Distances from carbody CG to bogie CGs [m]
+b = 17.375 # Distance between Front and Rear Bogie CG
 l_L, l_R = 2//2, 2//2 # Distances from bogie CG to left/right wheelsets [m]
 
 k_pL1, k_pR1, k_pL2, k_pR2 = 1.2e6, 1.2e6, 1.2e6, 1.2e6 # Primary suspension stiffnesses [N/m]
