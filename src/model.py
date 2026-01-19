@@ -18,6 +18,7 @@ import numpy as np
 # Parameters
 
 v = 310*3600/1000 # Railcar velocity [m/s]
+# v = 800*3600/1000
 
 m_c = 47800 # Carbody mass [kg]
 m_b1, m_b2 = 3500, 3500 # Bogie masses [kg]

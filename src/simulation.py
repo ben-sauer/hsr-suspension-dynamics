@@ -22,24 +22,24 @@ from track import step_input, sin_input, rough_input
 # Simulation Parameters
 x0 = np.zeros(14)
 
-start = 0
-stop = 10
-steps = 300
+start = 0 # [s]
+stop = 15 # [s]
+steps = 600
 time = np.linspace(start,stop,steps)
 
 # Step Input Parameters
-h_L = 0.1       # Left displacement height
-h_R = 0.1       # Right displacement height
-tr_L = 0.01     # Left ramp time
-tr_R = 0.01     # Right ramp time
+h_L = 0.1       # Left displacement height [m]
+h_R = 0.1       # Right displacement height [m]
+tr_L = 0.01     # Left ramp time [s]
+tr_R = 0.01     # Right ramp time [s]
 
 ### Uncomment below to use step response
-# U += step_input(time, h_L, h_R, tr_L, tr_R)
+# U = step_input(time, h_L, h_R, tr_L, tr_R)
 
 
 # Sinusoidal Input Parameters
-amp_L, amp_R = 0.01, 0.01     # Left and Rigth amplitudes
-freq_L, freq_R = 6, 6
+amp_L, amp_R = 0.03, 0.03     # Left and Rigth amplitudes [m]
+freq_L, freq_R = 0.8, 0.8     # Left and Right frequencies [Hz]
 
 
 ### Uncomment below to use sinusoidal response
