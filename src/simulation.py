@@ -13,10 +13,11 @@ Status: IN PROGRESS
 
 """
 
+from scipy.signal import welch
 import numpy as np
 import scipy.signal as sig
 import matplotlib.pyplot as plt
-from model import A, B
+from model import A, B, b_1, M, C, K
 from track import step_input, sin_input, rough_input
 
 # Simulation Parameters
@@ -39,7 +40,7 @@ tr_R = 0.01     # Right ramp time [s]
 
 # Sinusoidal Input Parameters
 amp_L, amp_R = 0.03, 0.03     # Left and Rigth amplitudes [m]
-freq_L, freq_R = 0.8, 0.8     # Left and Right frequencies [Hz]
+freq_L, freq_R = 0.75, 0.75     # Left and Right frequencies [Hz]
 
 
 ### Uncomment below to use sinusoidal response
@@ -57,17 +58,44 @@ D = np.zeros((14,8))
 
 # State Space
 sys = sig.StateSpace(A,B,C,D)
-
 t, y, x = sig.lsim(sys, U, time)
 
-# Plotting
+
+# Solve for Acceleration
+q = x[:, 0:7]
+q_dot = x[:, 7:14]
+
+x_dot = x @ A.T + U @ B.T
+q_ddot = x_dot[:, 7:14]
+a_z = q_ddot[:, 0]  
+
+# Get PSD and Plot
+fs = 1 / (t[1] - t[0])
+
+f, Paa = welch(a_z, fs=fs, nperseg=4096, detrend='constant')
+
 plt.figure(figsize=(12,9))
-plt.plot(t,y[:, 0], color='blue',linewidth = 3, label='Carbody Bounce')
-plt.plot(t,y[:, 1], color='green',linewidth = 3, label='Carbody Roll')
-plt.plot(t,y[:, 2], color='orange',linewidth = 3, label='Carbody Pitch')
-plt.title("Railcar Response")
-plt.xlabel("Time [s]")
-plt.ylabel("Y - Meters or Radians")
-plt.legend()
+plt.semilogy(f, Paa)
+plt.xlim(0, 10)     # rail vehicle comfort is low-frequency
+plt.xlabel("Frequency [Hz]")
+plt.ylabel("PSD of carbody accel [m^2/s^4/Hz]")
+plt.title("Power-Spectral Density of Carbody Vertical Acceleration from Rough Track Input")
+plt.minorticks_on()
 plt.grid()
+plt.savefig('figures/psd_az_3.png')
 plt.show()
+
+
+# # General Plotting
+# plt.figure(figsize=(12,9))
+# plt.plot(t,y[:, 0], color='blue',linewidth = 3, label='Carbody Bounce')
+# # plt.plot(t,y[:, 1], color='green',linewidth = 3, label='Carbody Roll')
+# # plt.plot(t,y[:, 2], color='orange',linewidth = 3, label='Carbody Pitch')
+# # plt.plot(t,((y[:, 0] + b_1 * y[:, 2]) - y[:, 3]), color='red', linewidth = 3, label = 'Front Suspension Travel')
+# plt.plot(t,q_ddot[:, 0], color='yellow',linewidth = 3, label='Carbody Bounce Acceleration')
+# plt.title("Railcar Response")
+# plt.xlabel("Time [s]")
+# plt.ylabel("Y - Meters or Radians")
+# plt.legend()
+# plt.grid()
+# plt.show()
