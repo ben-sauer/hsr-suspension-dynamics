@@ -31,6 +31,8 @@ omega_n = np.sqrt(np.real(eigvals))
 freq_hz = omega_n / (2*np.pi)
 
 print(freq_hz)
+print('\n')
+print(eigvecs)
 
 # for i in range(len(eigvals)):
 #     print(truncate(freq_hz[i], 3), eigvecs[i])

@@ -9,13 +9,16 @@ Author:
 Date:
     January 7, 2026
 
-Status: IN PROGRESS    
+Status: FINISHED
 
 """
 
 import numpy as np
 
-# Parameters
+
+# ==========================
+#         Parameters
+# ==========================
 
 v = 310*3600/1000 # Railcar velocity [m/s]
 # v = 800*3600/1000
@@ -40,12 +43,16 @@ c_sL1, c_sR1, c_sL2, c_sR2 = 2.0e4, 2.0e4, 2.0e4, 2.0e4 # Secondary suspension d
 z_gL1, z_gR1, z_gL2, z_gR2 = 0, 0, 0, 0 # Track irregularities at wheel-rail contacts [m]
 
 # Define Coordinates
-# x_c, phi_c, theta_c: Carbody vertical, roll, pitch
-# x_b1, phi_b1: Front bogie vertical, roll
-# x_b2, phi_b2: Rear bogie vertical, roll
-# q = [x_c, phi_c, theta_c, x_b1, phi_b1, x_b2, phi_b2]
+# z_c, phi_c, theta_c: Carbody vertical, roll, pitch
+# z_b1, phi_b1: Front bogie vertical, roll
+# z_b2, phi_b2: Rear bogie vertical, roll
+# q = [z_c, phi_c, theta_c, z_b1, phi_b1, z_b2, phi_b2]
 
-# Matrix Construction
+
+
+# ==============================
+#       Matrix Construction
+# ==============================
 
 M = np.array([[m_c, 0, 0, 0, 0, 0, 0],
               [0, I_cx, 0, 0, 0, 0, 0],
@@ -57,16 +64,17 @@ M = np.array([[m_c, 0, 0, 0, 0, 0, 0],
 
 M_inv = np.linalg.inv(M)
 
-C = np.array([[c_sL1 + c_sR1 + c_sL2 + c_sR2, -l_L*(c_sL1 + c_sL2) + l_R*(c_sR1 + c_sR2), b_1*(c_sL1 + c_sR1) - b_2*(c_sL2 + c_sR2), -(c_sL1 + c_sR1), c_sL1*l_L - c_sR1*l_R, -(c_sL2 + c_sR2), c_sL2*l_L - c_sR2*l_R],
-              [-l_L*(c_sL1 + c_sL2) + l_R*(c_sR1 + c_sR2), l_L**2*(c_sL1 + c_sL2) + l_R**2*(c_sR1 + c_sR2), b_1*(-l_L*c_sL1 + l_R*c_sR1) - b_2*(-l_L*c_sL2 + l_R*c_sR2), l_L*c_sL1 - l_R*c_sR1, -l_L**2*c_sL1 - l_R**2*c_sR1, l_L*c_sL2 - l_R*c_sR2, -l_L**2*c_sL2 - l_R**2*c_sR2],
-              [b_1*(c_sL1 + c_sR1) - b_2*(c_sL2 + c_sR2), b_1*(-l_L*c_sL1 + l_R*c_sR1) - b_2*(-l_L*c_sL2 + l_R*c_sR2), b_1**2*(c_sL1 + c_sR1) + b_2**2*(c_sL2 + c_sR2), -b_1*(c_sL1 + c_sR1), b_1*(l_L*c_sL1 - l_R*c_sR1), b_2*(c_sL2 + c_sR2), b_2*(l_L*c_sL2 - l_R*c_sR2)],
-              [-(c_sL1 + c_sR1), l_L*c_sL1 - c_sR1*l_R, -b_1*(c_sL1 + c_sR1), (c_sL1 + c_sR1 + c_pL1 + c_pR1), -l_L*(c_sL1+c_pL1) + l_R*(c_sR1 + c_pR1), 0, 0],
-              [c_sL1*l_L - c_sR1*l_R, -l_L**2*c_sL1 - l_R**2*c_sR1, b_1*(l_L*c_sL1 - l_R*c_sR1), -l_L*(c_sL1+c_pL1) + l_R*(c_sR1 + c_pR1), l_L**2*(c_sL1 + c_pL1) + l_R**2*(c_sR1 + c_pR1), 0, 0],
-              [-(c_sL2 + c_sR2), l_L*c_sL2 - c_sR2*l_R, b_2*(c_sL2 + c_sR2), 0, 0, (c_sL2 + c_sR2 + c_pL2 + c_pR2), -l_L*(c_sL2 + c_pL2) + l_R*(c_sR2 + c_pR2)],
-              [c_sL2*l_L - c_sR2*l_R, -l_L**2*c_sL2 - l_R**2*c_sR2, b_2*(l_L*c_sL2 - l_R*c_sR2), 0, 0, -l_L*(c_sL2 + c_pL2) + l_R*(c_sR2 + c_pR2), l_L**2*(c_sL2 + c_pL2) + l_R**2*(c_sR2 + c_pR2)]])
+def assemble_C_matrix(c_sL1=c_sL1, c_sR1=c_sR1, c_sL2=c_sL2, c_sR2=c_sR2):
+    C = np.array([[c_sL1 + c_sR1 + c_sL2 + c_sR2, -l_L*(c_sL1 + c_sL2) + l_R*(c_sR1 + c_sR2), b_1*(c_sL1 + c_sR1) - b_2*(c_sL2 + c_sR2), -(c_sL1 + c_sR1), c_sL1*l_L - c_sR1*l_R, -(c_sL2 + c_sR2), c_sL2*l_L - c_sR2*l_R],
+                [-l_L*(c_sL1 + c_sL2) + l_R*(c_sR1 + c_sR2), l_L**2*(c_sL1 + c_sL2) + l_R**2*(c_sR1 + c_sR2), b_1*(-l_L*c_sL1 + l_R*c_sR1) - b_2*(-l_L*c_sL2 + l_R*c_sR2), l_L*c_sL1 - l_R*c_sR1, -l_L**2*c_sL1 - l_R**2*c_sR1, l_L*c_sL2 - l_R*c_sR2, -l_L**2*c_sL2 - l_R**2*c_sR2],
+                [b_1*(c_sL1 + c_sR1) - b_2*(c_sL2 + c_sR2), b_1*(-l_L*c_sL1 + l_R*c_sR1) - b_2*(-l_L*c_sL2 + l_R*c_sR2), b_1**2*(c_sL1 + c_sR1) + b_2**2*(c_sL2 + c_sR2), -b_1*(c_sL1 + c_sR1), b_1*(l_L*c_sL1 - l_R*c_sR1), b_2*(c_sL2 + c_sR2), b_2*(l_L*c_sL2 - l_R*c_sR2)],
+                [-(c_sL1 + c_sR1), l_L*c_sL1 - c_sR1*l_R, -b_1*(c_sL1 + c_sR1), (c_sL1 + c_sR1 + c_pL1 + c_pR1), -l_L*(c_sL1+c_pL1) + l_R*(c_sR1 + c_pR1), 0, 0],
+                [c_sL1*l_L - c_sR1*l_R, -l_L**2*c_sL1 - l_R**2*c_sR1, b_1*(l_L*c_sL1 - l_R*c_sR1), -l_L*(c_sL1+c_pL1) + l_R*(c_sR1 + c_pR1), l_L**2*(c_sL1 + c_pL1) + l_R**2*(c_sR1 + c_pR1), 0, 0],
+                [-(c_sL2 + c_sR2), l_L*c_sL2 - c_sR2*l_R, b_2*(c_sL2 + c_sR2), 0, 0, (c_sL2 + c_sR2 + c_pL2 + c_pR2), -l_L*(c_sL2 + c_pL2) + l_R*(c_sR2 + c_pR2)],
+                [c_sL2*l_L - c_sR2*l_R, -l_L**2*c_sL2 - l_R**2*c_sR2, b_2*(l_L*c_sL2 - l_R*c_sR2), 0, 0, -l_L*(c_sL2 + c_pL2) + l_R*(c_sR2 + c_pR2), l_L**2*(c_sL2 + c_pL2) + l_R**2*(c_sR2 + c_pR2)]])
+    return C
 
-
-
+C = assemble_C_matrix()
 
 # Create K matrix similarly, changing c's to k's
 K = np.array([[k_sL1 + k_sR1 + k_sL2 + k_sR2, -l_L*(k_sL1 + k_sL2) + l_R*(k_sR1 + k_sR2), b_1*(k_sL1 + k_sR1) - b_2*(k_sL2 + k_sR2), -(k_sL1 + k_sR1), k_sL1*l_L - k_sR1*l_R, -(k_sL2 + k_sR2), k_sL2*l_L - k_sR2*l_R],
@@ -85,7 +93,6 @@ G_z_dot = np.array([[0,0,0,0],
               [-l_L*c_pL1,l_R*c_pR1,0,0],
               [0,0,c_pL2,c_pR2],
               [0,0,-l_L*c_pL2,l_R*c_pR2]])
-
 
 G_z = np.array([[0,0,0,0],
               [0,0,0,0],
@@ -135,3 +142,4 @@ def assemble_B_matrix(M_inv=M_inv,G_z=G_z,G_z_dot=G_z_dot):
     return B
 
 B = assemble_B_matrix()
+

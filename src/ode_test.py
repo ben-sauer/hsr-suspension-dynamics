@@ -40,7 +40,7 @@ solution = solve_ivp(
     args=(f,),
     rtol=1e-4,
     atol=1e-7,
-    max_step=1e-2,     # start here
+    max_step=1e-2,
     first_step=1e-4
 )
 
