@@ -22,8 +22,8 @@ With the emergence of high-speed rail projects on the US West Coast, this projec
 ## Current Status
 ✅ Literature Review and Scope Proposal<br>
 ✅ Working Dynamics Model in Python (Primary and Secondary Suspension)<br>
+✅ Rail Track Step and Noise Disturbance Model + Performance Test<br>
 🕔 Semi-Active Control Integrated on Secondary Suspension System<br>
-🕔 Rail Track Step and Noise Disturbance Model + Performance Test<br>
 🕔 CAD Model of the Simplified Railcar Body, Bogie, and suspension
 
 ## Scope and Limitations
